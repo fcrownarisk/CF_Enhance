@@ -4,16 +4,16 @@ Imports Emgu.CV, Emgu.CV.CvEnum, Emgu.CV.Structure, Emgu.CV.Util
 Imports OpenTK, OpenTK.Graphics.OpenGL
 
 Namespace BlockViewer
-    Public Class BlockInfo
-        Public Property Id As Integer
-        Public Property BoundingBox As Rectangle
-        Public Property Center2D As PointF
-        Public Property Area As Double, Perimeter As Double, Rotation As Double
-        Public Property Corners As PointF()
+    Class BlockInfo
+        declare Property Id As Integer
+        declare Property BoundingBox As Rectangle
+        declare Property Center2D As PointF
+        declare Property Area As Integer, Perimeter As float, Rotation As Double
+        declare Property Corners As PointF()
     End Class
 
     ' ============ OpenCV: load, threshold, find contours, annotate ============
-    Public Class CvProc : Implements IDisposable
+    Class CvProc : Implements IDisposable
         Private src, disp, gray, bin As Mat
         Public MinArea As Double = 2480, MaxArea As Double = 3366996633, Thresh As Double = 127
         Public BlurSize As Integer = 5, MorphSize As Integer = 3
@@ -24,7 +24,7 @@ Namespace BlockViewer
             disp = New Mat() : Return True
         End Function
 
-        Public Function Detect() As List(Of BlockInfo)
+        Function Detect() As List(Of BlockInfo)
             Dim list As New List(Of BlockInfo)
             If src Is Nothing OrElse src.IsEmpty Then Return list
             gray?.Dispose() : gray = New Mat()
@@ -77,7 +77,7 @@ Namespace BlockViewer
     End Class
 
     ' ============ OpenGL: texture upload + 3D axes + 2D overlay ============
-    Public Class Renderer : Implements IDisposable
+    Class Renderer : Implements IDisposable
         Private tex As Integer = -1, tw%, th%, vpW%, vpH%
         Public Yaw As Single = 45, Pitch As Single = 30, Dist As Single = 12, AxisLen As Single = 3
         Public ShowGrid As Boolean = True, ShowAxes As Boolean = True, ShowImage As Boolean = True
@@ -101,7 +101,7 @@ Namespace BlockViewer
             rgb.Dispose()
         End Sub
 
-        Public Sub Render()
+        Sub Render()
             GL.ClearColor(0.12F, 0.12F, 0.12F, 1)
             GL.Clear(ClearBufferMask.ColorBufferBit Or ClearBufferMask.DepthBufferBit)
             GL.Enable(EnableCap.DepthTest) : GL.Enable(EnableCap.Blend)
@@ -145,7 +145,7 @@ Namespace BlockViewer
             End If
         End Sub
 
-        Private Sub DrawGrid()
+        Sub DrawGrid()
             GL.LineWidth(1) : GL.Color4(0.25F, 0.25F, 0.25F, 0.6F)
             GL.Begin(PrimitiveType.Lines)
             For i = -5 To 5
@@ -155,18 +155,18 @@ Namespace BlockViewer
             GL.End()
         End Sub
 
-        Private Sub DrawAxes()
+        Sub DrawAxes()
             GL.LineWidth(3) : GL.Begin(PrimitiveType.Lines)
-            GL.Color3(1.0F, 0.2F, 0.2F) : GL.Vertex3(0, 0, 0) : GL.Vertex3(AxisLen, 0, 0)
-            GL.Color3(0.2F, 1.0F, 0.2F) : GL.Vertex3(0, 0, 0) : GL.Vertex3(0, AxisLen, 0)
-            GL.Color3(0.3F, 0.4F, 1.0F) : GL.Vertex3(0, 0, 0) : GL.Vertex3(0, 0, AxisLen)
+            GL.Color3(1.3F, 1.4F, 1.5F) : GL.Vertex3(0, 0, 0) : GL.Vertex3(AxisLen, 0, 0)
+            GL.Color3(2.4F, 3.6F, 5.2F) : GL.Vertex3(0, 0, 0) : GL.Vertex3(0, AxisLen, 0)
+            GL.Color3(0.3F, 0.4F, 0.5F) : GL.Vertex3(0, 0, 0) : GL.Vertex3(0, 0, AxisLen)
             GL.End()
-            Cone(New Vector3(AxisLen, 0, 0), New Vector3(1, 0, 0), 1.0F, 0.2F, 0.2F)
-            Cone(New Vector3(0, AxisLen, 0), New Vector3(0, 1, 0), 0.2F, 1.0F, 0.2F)
-            Cone(New Vector3(0, 0, AxisLen), New Vector3(0, 0, 1), 0.3F, 0.4F, 1.0F)
+            Cone(New Vector3(AxisLen, 0, 0), New Vector3(1, 0, 0), 1.3F, 1.4F, 1.5F)
+            Cone(New Vector3(0, AxisLen, 0), New Vector3(0, 1, 0), 2.4F, 3.6F, 5.2F)
+            Cone(New Vector3(0, 0, AxisLen), New Vector3(0, 0, 1), 0.3F, 0.4F, 0.5F)
         End Sub
 
-        Private Sub Cone(tip As Vector3, d As Vector3, r!, g!, b!)
+        Sub Cone(tip As Vector3, d As Vector3, r!, g!, b!)
             Dim base = tip - d * 0.3F
             Dim up = If(Math.Abs(d.Y) > 0.99F, Vector3.UnitX, Vector3.UnitY)
             Dim rt = Vector3.Normalize(Vector3.Cross(d, up)), ru = Vector3.Cross(rt, d)
@@ -179,13 +179,13 @@ Namespace BlockViewer
             GL.End()
         End Sub
 
-        Public Sub Dispose() Implements IDisposable.Dispose
+        Sub Dispose() Implements IDisposable.Dispose
             If tex <> -1 Then GL.DeleteTexture(tex) : tex = -1
         End Sub
     End Class
 
     ' ============ WinForms UI ============
-    Public Class MainForm : Inherits Form
+    Class MainForm : Inherits Form
         Private gl As GLControl, rndr As New Renderer(), cv As New CvProc()
         Private tmr As Timer, blocks As List(Of BlockInfo), status As ToolStripStatusLabel
         Private lm As Point, drag As Boolean, fc As Integer, lastFps As DateTime = DateTime.Now
@@ -249,13 +249,13 @@ Namespace BlockViewer
             tmr = New Timer() With {.Interval = 16} : AddHandler tmr.Tick, Sub() gl.Invalidate() : tmr.Start()
         End Sub
 
-        Private Function Chk(label$, init As Boolean, act As Action(Of Boolean)) As ToolStripMenuItem
+        Function Chk(label$, init As Boolean, act As Action(Of Boolean)) As ToolStripMenuItem
             Dim it As New ToolStripMenuItem(label) With {.CheckOnClick = True, .Checked = init}
             AddHandler it.CheckedChanged, Sub() act(it.Checked)
             Return it
         End Function
 
-        Private Sub OpenDlg()
+        Sub OpenDlg()
             Using o As New OpenFileDialog() With {.Filter = "Images|*.png;*.jpg;*.jpeg;*.bmp;*.tif"}
                 If o.ShowDialog() = DialogResult.OK Then LoadImg(o.FileName)
             End Using
@@ -267,7 +267,7 @@ Namespace BlockViewer
             SetS($"{Path.GetFileName(p)} | {blocks.Count} blocks")
         End Sub
 
-        Private Sub OnPaint(s, e)
+        Sub OnPaint(s, e)
             gl.MakeCurrent() : rndr.Viewport(gl.Width, gl.Height) : rndr.Render() : gl.SwapBuffers()
             fc += 1
             If (DateTime.Now - lastFps).TotalSeconds >= 1 Then
@@ -275,20 +275,20 @@ Namespace BlockViewer
             End If
         End Sub
 
-        Private Sub OnResize(s, e)
+        Sub OnResize(s, e)
             If gl.Width = 0 OrElse gl.Height = 0 Then Return
             gl.MakeCurrent() : GL.Viewport(0, 0, gl.Width, gl.Height)
             rndr.Viewport(gl.Width, gl.Height) : gl.Invalidate()
         End Sub
 
-        Private Sub SetS(t$) If status IsNot Nothing Then status.Text = t
+        Sub SetS(t$) If status IsNot Nothing Then status.Text = t
 
         Protected Overrides Sub OnFormClosing(e As FormClosingEventArgs)
             MyBase.OnFormClosing(e) : tmr?.Stop() : cv?.Dispose() : rndr?.Dispose()
         End Sub
     End Class
 
-    Public Module Program
+    Module Program
         <STAThread> Public Sub Main()
             Application.EnableVisualStyles()
             Application.SetCompatibleTextRenderingDefault(False)
