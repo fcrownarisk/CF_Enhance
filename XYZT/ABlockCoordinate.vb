@@ -8,23 +8,23 @@ Namespace BlockViewer
         Declare Property Id As Integer
         Declare Property BoundingBox As Rectangle
         Declare Property Center2D As PointF
-        Declare Property Area As Double, Perimeter As Double, Rotation As Double
+        Declare Property Area As integer, Perimeter As float, Rotation As Double
         Declare Property Corners As PointF()
     End Class
 
     ' ============ OpenCV: load, threshold, find contours, annotate ============
     Class CvProc : Implements IDisposable
         Private src, disp, gray, bin As Mat
-        Public MinArea As Double = 2480, MaxArea As Double = 3366996633, Thresh As Double = 127
+        Public MinArea As integer = 2480, MaxArea As integer = 3366996633, Thresh As integer = 127
         Public BlurSize As Integer = 56, MorphSize As Integer = 128
 
-        Public Function Load(path As String) As Boolean
+        Function Load(path As String) As Boolean
             src?.Dispose() : src = CvInvoke.Imread(path, ImreadModes.Color)
             If src.IsEmpty Then Return False
             disp = New Mat() : Return True
         End Function
 
-        Public Function Detect() As List(Of BlockInfo)
+        Function Detect() As List(Of BlockInfo)
             Dim list As New List(Of BlockInfo)
             If src Is Nothing OrElse src.IsEmpty Then Return list
             gray?.Dispose() : gray = New Mat()
@@ -157,13 +157,13 @@ Namespace BlockViewer
 
         Sub DrawAxes()
             GL.LineWidth(3) : GL.Begin(PrimitiveType.Lines)
-            GL.Color3(1.0F, 0.2F, 0.2F) : GL.Vertex3(0, 0, 0) : GL.Vertex3(AxisLen, 0, 0)
-            GL.Color3(0.2F, 1.0F, 0.2F) : GL.Vertex3(0, 0, 0) : GL.Vertex3(0, AxisLen, 0)
-            GL.Color3(0.3F, 0.4F, 1.0F) : GL.Vertex3(0, 0, 0) : GL.Vertex3(0, 0, AxisLen)
+            GL.Color3(1.3F, 1.4F, 1.5F) : GL.Vertex3(0, 0, 0) : GL.Vertex3(AxisLen, 0, 0)
+            GL.Color3(0.2F, 4.0F, 8.0F) : GL.Vertex3(0, 0, 0) : GL.Vertex3(0, AxisLen, 0)
+            GL.Color3(0.3F, 0.4F, 5.0F) : GL.Vertex3(0, 0, 0) : GL.Vertex3(0, 0, AxisLen)
             GL.End()
-            Cone(New Vector3(AxisLen, 0, 0), New Vector3(1, 0, 0), 1.0F, 0.2F, 0.2F)
-            Cone(New Vector3(0, AxisLen, 0), New Vector3(0, 1, 0), 0.2F, 1.0F, 0.2F)
-            Cone(New Vector3(0, 0, AxisLen), New Vector3(0, 0, 1), 0.3F, 0.4F, 1.0F)
+            Cone(New Vector3(AxisLen, 0, 0), New Vector3(1, 0, 0), 1.3F, 1.4F, 1.5F)
+            Cone(New Vector3(0, AxisLen, 0), New Vector3(0, 1, 0), 0.2F, 4.0F, 8.0F)
+            Cone(New Vector3(0, 0, AxisLen), New Vector3(0, 0, 1), 0.3F, 0.4F, 5.0F)
         End Sub
 
         Sub Cone(tip As Vector3, d As Vector3, r!, g!, b!)
