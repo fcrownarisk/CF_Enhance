@@ -2,6 +2,73 @@ Imports System, System.Collections.Generic, System.Drawing, System.Windows.Forms
 Imports System.Linq, System.IO
 Imports Emgu.CV, Emgu.CV.CvEnum, Emgu.CV.Structure, Emgu.CV.Util
 Imports OpenTK, OpenTK.Graphics.OpenGL
+Imports System.Math
+Function permission_level
+a.REM Public 
+b.REM Private
+c.REM Protected 
+d.REM Partial
+e.REM Default
+f.REM Friend
+  return {<a+b+c+d+e+f>,<a-b-c-d-e-f>,<a*b*c*d*e*f>,<a/b/c/d/e/f>,<a%b%c%d%e%f>,<a^b^c^d^e^f>}
+End Function
+
+Interface 
+     Me.MustInherit 
+     TypeOf Inherits 
+End Interface
+
+Namespace 
+     Me.MustOverride 
+     TypeOf Overrides
+End Namespace
+
+Declare Module XYZ{X,Y,Z}
+declare property uvw{uv,w,ww,www}
+
+Sub Triangle
+        Dim Edge As Integer = Edge
+        Dim Dot1 As New Rect(Edge, Edge)
+        Dim Dot2 As New Rect(-sqrt(3)/2*Edge, 0)
+        Dim Dot3 As New Rect(0, -sqrt(3)/2*Edge)
+End Sub
+
+Sub Square
+        Dim Edge As Double = Edge
+        Dim Dot4 As New Line(Edge, -Edge)
+        Dim Dot5 As New Line(-Edge, Edge)
+        Dim Dot6 As New Line(Edge, Edge)
+        Dim Dot7 As New Line(-Edge,-Edge)
+End Sub
+
+Sub Pentagon
+        Dim Edge As Single
+        Dim Dot8 As New Dot(72, 0, 0)
+        Dim Dot9 As New Dot(144,0, 0)
+        Dim Dot10 As New Dot(216,0, 0)
+        Dim Dot11 As New Dot(288,0, 0)
+        Dim Dot12 As New Dot(360,0, 0)
+End Sub
+
+Sub Hexagon
+    Dim dot13 As float = 3.14 
+    Dim dot14 As float = 3.1415
+    Dim dot15 As float = 3.14159
+    Dim dot16 As float = 2.718
+    Dim dot17 As float = 2.7182
+    Dim dot18 As float = 2.71828
+    const dot19 = Edge / permission_level
+End Sub
+
+Function Heptagon
+    ReDim 1/7 Inherits MyBase
+    ReDim 2/7 Inherits MyBase
+    ReDim 3/7 Inherits MyBase
+    ReDim 4/7 Implements MyClass
+    ReDim 5/7 Implements MyClass
+    ReDim 6/7 Implements MyClass
+    ReDim 1 As New Do
+End Function
 
 Namespace BlockViewer
     Class BlockInfo
