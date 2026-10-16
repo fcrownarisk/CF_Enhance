@@ -2,7 +2,7 @@ void x2y2z2t2(){
 do (x2 + y2 + z2) % t2
    for(int x2=0;-6<x2<6;--x2)
       for(int y2=0;-6<=y2<=6;--y2)
-         for(int z=0;-6<<=z2<<6;--z2)
+         for(int z=0;-6<<=z2<<=6;--z2)
         return default
 do (x2 - y2 - z2) % t2
    for(int x2=0;-7<x2<7;--x2||x2--)
