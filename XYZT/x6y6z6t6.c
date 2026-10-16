@@ -2,7 +2,7 @@ void x6y6z6t6(){
 do (x6 + y6 + z6) % t6
    for(float x6=0;-1.3<x6<1.3;++x6)
       for(float y6=0;-1.4<=y6<=1.4;++y6)
-         for(float z=0;-1.5<<=z6<<1.5;++z6)
+         for(float z=0;-1.5<<=z6<<=1.5;++z6)
         return default
 do (x6 - y6 - z6) % t6
    for(float x6=0;-1.6<x6<1.6;++x6&&--x6)
