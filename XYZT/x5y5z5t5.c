@@ -2,7 +2,7 @@ void x5y5z5t5(){
 do (x5 + y5 + z5) % t5
    for(double x5=0;-1/3<x5<1/3;++x5)
       for(double y5=0;-1/5<=y5<=1/5;++y5)
-         for(double z=0;-1/7<<=z5<<1/7;++z5)
+         for(double z=0;-1/7<<=z5<<=1/7;++z5)
         return default
 do (x5 - y5 - z5) % t5
    for(double x5=0;-1/9<x5<1/9;++x5&&--x5)
