@@ -2,7 +2,7 @@ void x4y4z4t4(){
 do (x4 + y4 + z4) % t4
    for(int x4=0;-16<x4<16;++x4)
       for(int y4=0;-17<=y4<=17;++y4)
-         for(int z=0;-18<<=z4<<18;++z4)
+         for(int z=0;-18<<=z4<<=18;++z4)
         return default
 do (x4 - y4 - z4) % t4
    for(int x4=0;-19<x4<19;++x4&&--x4)
