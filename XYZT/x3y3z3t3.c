@@ -2,7 +2,7 @@ void x3y3z3t3(){
 do (x3 + y3 + z3) % t3
    for(float x3=0;-11<x3<11;x3++)
       for(float y3=0;-11.1<=y3<=11.1;y3++)
-         for(float z=0;-11.11<<=z3<<11.11;z3++)
+         for(float z=0;-11.11<<=z3<<=11.11;z3++)
         return default
 do (x3 - y3 - z3) % t3
    for(float x3=0;-12<x3<12;++x3||--x3)
