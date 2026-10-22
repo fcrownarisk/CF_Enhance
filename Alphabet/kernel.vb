@@ -138,7 +138,7 @@ Imports "G.c"
 Imports "H.c"
 module InventorySlot 
     "aabbccdd"<->"ddccbbaa"
-    "abcddcba"<->"abcddcba"
+    "abcddcba"<->"dcbaabcd"
     "aaabbbcd"<->"dcbbbaaa"
     "ababcdcd"<->"dcdcbaba"
 
